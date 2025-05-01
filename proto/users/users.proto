@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package user;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "user.v1;userv1";
+
+service User {
+  rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
+  rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse);
+  rpc DeleteProfile(DeleteProfileRequest) returns (google.protobuf.Empty);
+  rpc UploadPhoto (UploadPhotoRequest) returns (UploadPhotoResponse);
+  rpc DeletePhoto (DeletePhotoRequest) returns (google.protobuf.Empty);
+}
+
+message GetProfileRequest {
+    string user_id = 1;
+}
+
+message GetProfileResponse {
+    UserProfile profile = 1;
+}
+
+message UpdateProfileRequest {
+    string user_id = 1; 
+    string name = 2;
+    int32 age = 3;
+    string gender = 4;
+    string about = 5;
+    repeated int64 interests_id = 6;
+}
+
+message UpdateProfileResponse {
+    UserProfile profile = 1;
+}
+
+message DeleteProfileRequest {
+    string user_id = 1;
+}
+
+message UploadPhotoRequest {
+    string user_id = 1;
+    bytes photo_data = 2;
+}
+
+message UploadPhotoResponse {
+    int64 photo_id = 1;
+    string url = 2;
+}
+
+message DeletePhotoRequest {
+    string user_id = 1;
+    int64 photo_id = 2;
+}
+
+message UserProfile {
+    string user_id = 1;
+    string name = 2;
+    int32 age = 3;
+    string gender = 4;
+    string description = 5;
+    repeated Photo photos = 6;
+    repeated Interest interests = 7;
+}
+
+message Photo {
+    int64 photo_id = 1;
+    string photo_url = 2;
+}
+
+message Interest {
+    int64 interest_id = 1;
+    string name = 2;
+}
+
+
